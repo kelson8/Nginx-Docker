@@ -1,0 +1,66 @@
+services:
+
+  # Nginx testing container
+  kelsoncraft-nginx-test:
+      build:
+        context: .
+        dockerfile: Dockerfile
+      # image: kelsoncraft-nginx-test:latest
+      container_name: kelsoncraft-nginx-test
+      volumes:
+        # Mount the src folder into /var/www/html.
+        - ./src:/var/www/html
+        # This stores the logs from the container.
+        - ./logs:/var/log/nginx
+        # Mount the nginx data folders in here.
+        # This should solve this needing to always rebuild.
+        # Optionally, mount these as read-only.
+        # - ./data/nginx/conf.d:/etc/nginx/conf.d:ro
+        - ./data/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+        - ./data/nginx/cloudflare.conf:/etc/nginx/cloudflare.conf:ro
+        - ./data/nginx/mime.types:/etc/nginx/mime.types:ro
+        - ./data/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+
+        # Nginx includes folder for extra configs
+        # TODO Fix this, for some reason it doesn't mount the includes folder and tries to make a new cloudflare.conf folder.
+        # - ./data/nginx/includes:/etc/nginx/includes:ro
+      ports:
+        # Changed to higher port for non-root user.
+        - "3004:8081"
+
+      # For a bit of security
+      # https://oneuptime.com/blog/post/2026-02-08-how-to-use-docker-compose-capadd-and-capdrop/view
+      # Disabled in case this breaks.
+      # cap_drop:
+        # - ALL
+      # cap_add:
+        # - NET_BIND_SERVICE
+        # - CHOWN
+        # - SETUID
+        # - SETGID
+
+      # New for non-root user setup
+      # https://stackoverflow.com/questions/56844746/how-to-set-uid-and-gid-in-docker-compose
+      user: "${USER_UID}:${USER_GID}"
+
+      restart: unless-stopped
+      networks:
+        - testing
+
+
+  kelsoncraft-nginx-php:
+    container_name: kelsoncraft-nginx-php
+    # image: php:fpm-alpine
+    # Version locked to 8.4.22 for now.
+    image: php:8.4.22-fpm-alpine3.23
+    networks:
+      - testing
+    restart: unless-stopped
+    volumes:
+      - ./src/:/var/www/html/
+      # - ./logs/php.log:/var/log/fpm-php.www.log
+      - ./logs/php.log:/var/log/fpm-php.www.log
+
+networks:
+  testing:
+    external: true

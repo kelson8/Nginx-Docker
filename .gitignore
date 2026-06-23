@@ -1,0 +1,41 @@
+# build output
+dist/
+/build
+
+*.bak
+*.old
+
+# SQLite databases
+*.db
+*.db-journal
+
+# Audio/video
+*.mp3
+*.mp4
+*.webm
+*.m4a
+*.mov
+*.avi
+
+# Compressed
+*.tar
+*.tar.gz
+*.zip
+*.7z
+*.rar
+
+# misc
+.DS_Store
+*.pem
+
+# Just exclude all log files.
+*.log
+
+# Environments
+.env
+.env.production
+env/
+env.bak/
+
+# jetbrains setting folder
+.idea/

@@ -1,0 +1,33 @@
+.main_headers{
+    text-align: center;
+}
+
+.center_text{
+    text-align: center;
+}
+
+/* https://design.dev/guides/css-variables/ */
+:root {
+    /* slate-700 from tailwind */
+  /* --primary-color: oklch(37.2% 0.044 257.287); */
+  /* dark-gray-800 from tailwind, matches the main website. */
+  --primary-color: #1f2937;
+  --spacing: 1rem;
+}
+
+/* Fix for centering bullet points */
+/* https://teamtreehouse.com/community/styling-list-bullet-points-in-css */
+ul {
+  list-style-position: inside;
+  text-align: center;
+}
+
+
+/* Simple dark mode */
+/* https://dev.to/madsstoumann/dark-mode-in-3-lines-of-css-and-other-adventures-1ljj */
+body {
+  /* background-color: Canvas; */
+  background-color: var(--primary-color);
+  color: CanvasText;
+  color-scheme: light dark;
+}
