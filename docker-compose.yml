@@ -51,8 +51,8 @@ services:
   kelsoncraft-nginx-php:
     container_name: kelsoncraft-nginx-php
     # image: php:fpm-alpine
-    # Version locked to 8.4.22 for now.
-    image: php:8.4.22-fpm-alpine3.23
+    # Version locked to 8.5.12, updated to patch some exploits.
+    image: php:8.5.12-fpm-alpine3.23
     networks:
       - testing
     restart: unless-stopped

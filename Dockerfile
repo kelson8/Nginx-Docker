@@ -1,6 +1,6 @@
-ARG NGINX_VERSION=1.31.2
+ARG NGINX_VERSION=1.31.8
 
-# Version locked to 1.31.2 for now, was originally using base alpine image.
+# Version locked to 1.31.8 for now, was originally using base alpine image.
 FROM nginx:${NGINX_VERSION}-alpine-slim
 
 # Only setup the timezone
